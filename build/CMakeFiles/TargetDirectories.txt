@@ -1,3 +1,0 @@
-/home/meghdouri/c++/tipousi/build/CMakeFiles/Tipousi.dir
-/home/meghdouri/c++/tipousi/build/CMakeFiles/edit_cache.dir
-/home/meghdouri/c++/tipousi/build/CMakeFiles/rebuild_cache.dir
