@@ -6,5 +6,14 @@ This will probably take some time but it would help me understand the tiny detai
 
 
 ## Include externals (submodules)
+```bash
 git submodule init
 git submodule update
+```
+
+## TODOs
+- implement more stuff...
+- focus of backward pass implementation
+
+- add enum for initial weights distribution
+- allow for multiple inputs/outputs to sequential
