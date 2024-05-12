@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/Tipousi.dir/tests/main.cpp.o -o Tipousi 
