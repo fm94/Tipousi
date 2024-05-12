@@ -6,11 +6,11 @@ namespace Tipousi
 {
     namespace Activation
     {
-        class ReLU : public Op
+        class MyTemplate : public Op
         {
             public:
-                ReLU();
-                ~ReLU() override = default;
+                MyTemplate();
+                ~MyTemplate() override = default;
 
                 void forward(const Eigen::MatrixXf &in, Eigen::MatrixXf &out) override;
 
