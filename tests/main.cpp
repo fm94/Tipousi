@@ -4,13 +4,40 @@
 #include "activation/softmax.hpp"
 
 #include "layer/dense.hpp"
-//#include "layer/input.hpp"
-
-#include "model/sequential.hpp"
 
 #include <memory>
 
+#include "model/node.hpp"
+#include "model/sequential.hpp"
+
 using namespace Tipousi;
+
+
+void test_create_net(){
+    // create layer nodes
+    // these are raw ptrs and ownership will go to the graph,
+    // it is responsable for cleaning them!
+    Graph::Node* node1 = Graph::Node::create<Layer::Dense>(5, 32);
+    Graph::Node* node2 = Graph::Node::create<Activation::ReLU>();
+    Graph::Node* node3 = Graph::Node::create<Layer::Dense>(32, 1);
+    Graph::Node* node4 = Graph::Node::create<Activation::Softmax>();
+
+    // build the dependencies
+    node2->add_input(node1); // node2 depends on node1
+    node3->add_input(node2); // node3 depends on node2
+    node4->add_input(node3); // node4 depends on node2
+
+    // create the graph
+    Graph::Sequential net;
+    net.add_node(node1);
+    net.add_node(node2);
+    net.add_node(node3);
+    net.add_node(node4);
+
+    // forward and backward pass
+    std::vector<float> output = net.forward();
+    net.backward();
+}
 
 int main(int argc, char const *argv[])
 {
@@ -26,22 +53,6 @@ int main(int argc, char const *argv[])
     // layers
     Layer::Dense dense(16, 32); // 16 inputs, 32 outputs
 
-    // models
-    std::vector<Op*> model {};
-    Model::Sequential sequential(model);
-
     // build a model - current idea
-    // TODO: unique ptrs, handle ownership?
-    // use raw pointers and ownership should go to the next layer
-    // when the next layer is destroyed it destroys the previous
-    // layer and so on until the first one
-    // so to destroy the model we need to destroy the sequential which then 
-    // triggers this chain reaction and we get no memory leaks
-
-    //auto input = std::make_unique<Input>(5);
-    // auto x1 = std::make_unique<Layer::Dense>(5, 32)(input);
-    // auto x2 = std::make_unique<Activation::ReLU>()(x1);
-    // auto x3 = std::make_unique<Layer::Dense>(32, 2)(x2);
-    // auto output = std::make_unique<Activation::Softmax>()(x3);
-    // Model::Sequential model(input, output);
+    test_create_net();
 }

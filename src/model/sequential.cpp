@@ -1,19 +1,26 @@
+#include <vector>
+
 #include "model/sequential.hpp"
 
-namespace Tipousi{
-    namespace Model{
-Sequential::Sequential(std::vector<Op *> &model): m_model(model) {
+namespace Tipousi
+{
+    namespace Graph
+    {
+
+        void Sequential::add_node(Graph::Node *node)
+        {
+            m_nodes.push_back(node);
+        }
+
+        std::vector<float> Sequential::forward()
+        {
+            //
+        }
+
+        void Sequential::backward()
+        {
+            //
+        }
+
+    }
 }
-
-void Sequential::forward(Eigen::MatrixXf &x) {
-}
-
-void Sequential::backward(float &loss, const Eigen::MatrixXf &true_y, Eigen::MatrixXf &pred_y) {
-}
-
-
-    };
-};
-
-
-

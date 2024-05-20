@@ -1,26 +1,31 @@
-#pragma once
-
-#include "base/op.hpp"
-
-#include <iostream>
 #include <vector>
+
+#include "model/node.hpp"
 
 namespace Tipousi
 {
-    namespace Model
+    namespace Graph
     {
         class Sequential
         {
+
         public:
-            Sequential(std::vector<Op *> &model);
-            ~Sequential() = default;
+            Sequential() = default;
+            ~Sequential()
+            {
+                for (auto node : m_nodes)
+                {
+                    delete node;
+                }
+            }
 
-            void forward(Eigen::MatrixXf &x);
-
-            void backward(float &loss, const Eigen::MatrixXf &true_y, Eigen::MatrixXf &pred_y);
+            void add_node(Graph::Node *node);
+            std::vector<float> forward();
+            void backward();
 
         private:
-            std::vector<Op *> m_model;
+            std::vector<Graph::Node *> m_nodes;
         };
-    }; // namespace Model
-}; // namespace Tipousi
+
+    }
+}
