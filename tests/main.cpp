@@ -7,20 +7,24 @@
 
 #include <memory>
 
-#include "model/node.hpp"
-#include "model/sequential.hpp"
+#include "graph/node.hpp"
+#include "graph/sequential.hpp"
 
 using namespace Tipousi;
+using namespace Graph;
+using namespace Layer;
+using namespace Activation;
+using namespace Loss;
 
-
-void test_create_net(){
+void test_create_net()
+{
     // create layer nodes
     // these are raw ptrs and ownership will go to the graph,
     // it is responsable for cleaning them!
-    Graph::Node* node1 = Graph::Node::create<Layer::Dense>(5, 32);
-    Graph::Node* node2 = Graph::Node::create<Activation::ReLU>();
-    Graph::Node* node3 = Graph::Node::create<Layer::Dense>(32, 1);
-    Graph::Node* node4 = Graph::Node::create<Activation::Softmax>();
+    Node *node1 = Node::create<Dense>(5, 32);
+    Node *node2 = Node::create<ReLU>();
+    Node *node3 = Node::create<Dense>(32, 1);
+    Node *node4 = Node::create<Softmax>();
 
     // build the dependencies
     node2->add_input(node1); // node2 depends on node1
@@ -28,14 +32,14 @@ void test_create_net(){
     node4->add_input(node3); // node4 depends on node2
 
     // create the graph
-    Graph::Sequential net;
+    Sequential net;
     net.add_node(node1);
     net.add_node(node2);
     net.add_node(node3);
     net.add_node(node4);
 
     // forward and backward pass
-    std::vector<float> output = net.forward();
+    net.forward();
     net.backward();
 }
 
@@ -44,14 +48,14 @@ int main(int argc, char const *argv[])
     // tests
 
     // loss functions
-    Loss::MSE mse;
+    MSE mse;
 
     // activation functions
-    Activation::ReLU relu;
-    Activation::Softmax softmax;
+    ReLU relu;
+    Softmax softmax;
 
     // layers
-    Layer::Dense dense(16, 32); // 16 inputs, 32 outputs
+    Dense dense(16, 32); // 16 inputs, 32 outputs
 
     // build a model - current idea
     test_create_net();

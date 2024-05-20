@@ -1,18 +1,16 @@
-#include <vector>
-
-#include "model/sequential.hpp"
+#include "graph/sequential.hpp"
 
 namespace Tipousi
 {
     namespace Graph
     {
 
-        void Sequential::add_node(Graph::Node *node)
+        void Sequential::add_node(Node *node)
         {
             m_nodes.push_back(node);
         }
 
-        std::vector<float> Sequential::forward()
+        void Sequential::forward()
         {
             //
         }

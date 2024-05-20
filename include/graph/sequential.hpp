@@ -1,6 +1,8 @@
+#pragma once
+
 #include <vector>
 
-#include "model/node.hpp"
+#include "graph/node.hpp"
 
 namespace Tipousi
 {
@@ -19,12 +21,12 @@ namespace Tipousi
                 }
             }
 
-            void add_node(Graph::Node *node);
-            std::vector<float> forward();
+            void add_node(Node *node);
+            void forward();
             void backward();
 
         private:
-            std::vector<Graph::Node *> m_nodes;
+            std::vector<Node *> m_nodes;
         };
 
     }

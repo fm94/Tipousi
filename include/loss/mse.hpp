@@ -1,3 +1,5 @@
+#pragma once
+
 namespace Tipousi
 {
     namespace Loss
@@ -6,4 +8,4 @@ namespace Tipousi
         {
         };
     }; // namespace Loss
-};     // namespace Tipousi
+}; // namespace Tipousi

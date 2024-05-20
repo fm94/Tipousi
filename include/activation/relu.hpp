@@ -8,13 +8,13 @@ namespace Tipousi
     {
         class ReLU : public Op
         {
-            public:
-                ReLU();
-                ~ReLU() override = default;
+        public:
+            ReLU();
+            ~ReLU() override = default;
 
-                void forward(const Eigen::MatrixXf &in, Eigen::MatrixXf &out) override;
+            void forward(const Eigen::MatrixXf &in, Eigen::MatrixXf &out) override;
 
-                void backward(const Eigen::MatrixXf &dout, Eigen::MatrixXf &ddout) override;
+            void backward(const Eigen::MatrixXf &dout, Eigen::MatrixXf &ddout) override;
         };
     }; // namespace Activation
-};     // namespace Tipousi
+}; // namespace Tipousi

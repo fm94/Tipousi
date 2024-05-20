@@ -6,7 +6,7 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/include/activation
     ${PROJECT_SOURCE_DIR}/include/loss
     ${PROJECT_SOURCE_DIR}/include/layer
-    ${PROJECT_SOURCE_DIR}/include/model
+    ${PROJECT_SOURCE_DIR}/include/graph
     ${PROJECT_SOURCE_DIR}/include/base
 )
 
