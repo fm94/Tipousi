@@ -18,14 +18,17 @@ namespace Tipousi
                 // travers all nodes in backward pass
                 // and delete all of them sequentially
                 Node *current_node = m_output_node;
-                bool  all_cleaned  = false;
-                while (!all_cleaned)
+                while (true)
                 {
-                    // TODO : hacky approch deleting only first node -> should
-                    // be recursive
-                    Node *next_cleaned = current_node->get_inputs()[0];
+                    // TODO : hacky approch deleting only first node
+                    // -> should be recursive
+                    auto input_nodes = current_node->get_inputs();
+                    if (input_nodes.size() == 0 || !input_nodes[0])
+                    {
+                        break;
+                    }
                     delete current_node;
-                    current_node = next_cleaned;
+                    current_node = input_nodes[0];
                 }
             }
 

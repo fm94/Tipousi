@@ -10,8 +10,7 @@ namespace Tipousi
         {
             Eigen::MatrixXf expX    = in.array().exp();
             Eigen::VectorXf sumExpX = expX.rowwise().sum();
-            out =
-                (expX.array().rowwise() / sumExpX.transpose().array()).matrix();
+            out = (expX.array().colwise() / sumExpX.array()).matrix();
         }
 
         void Softmax::backward(const Eigen::MatrixXf &dout,

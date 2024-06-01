@@ -16,8 +16,8 @@ namespace Tipousi
             // while keeping the original data intact
             Eigen::MatrixXf data_copy    = in;
             Node           *current_node = m_input_node;
-            bool            is_finished  = false;
-            while (!is_finished)
+            // continue until no more nodes
+            while (true)
             {
                 if (current_node)
                 {
@@ -25,12 +25,13 @@ namespace Tipousi
                     auto output_nodes = current_node->get_outputs();
                     if (output_nodes.size() == 0 || !output_nodes[0])
                     {
-                        is_finished = true;
+                        break;
                     }
                     current_node->forward(data_copy);
                     current_node = output_nodes[0];
                 }
             }
+            out = data_copy;
         }
 
         void Sequential::backward()
