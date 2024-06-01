@@ -4,9 +4,7 @@ namespace Tipousi
 {
     namespace Activation
     {
-        ReLU::ReLU()
-        {
-        }
+        ReLU::ReLU() {}
 
         void ReLU::forward(const Eigen::MatrixXf &in, Eigen::MatrixXf &out)
         {
@@ -16,5 +14,5 @@ namespace Tipousi
         void ReLU::backward(const Eigen::MatrixXf &dout, Eigen::MatrixXf &ddout)
         {
         }
-    };
-};
+    };  // namespace Activation
+};      // namespace Tipousi

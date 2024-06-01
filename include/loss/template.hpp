@@ -7,5 +7,5 @@ namespace Tipousi
         class MyTemplate
         {
         };
-    }; // namespace Loss
-}; // namespace Tipousi
+    };  // namespace Loss
+};      // namespace Tipousi

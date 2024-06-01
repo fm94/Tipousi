@@ -1,0 +1,17 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+AllowShortIfStatementsOnASingleLine: false
+BreakBeforeBraces: Allman
+AlwaysBreakTemplateDeclarations: Yes
+Standard: Cpp11
+PointerAlignment: Right
+SpacesBeforeTrailingComments: 2
+SpaceBeforeParens: ControlStatements
+IndentCaseLabels: true
+NamespaceIndentation: All
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+SortIncludes: true
+IncludeBlocks: Merge

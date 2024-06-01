@@ -7,5 +7,5 @@ namespace Tipousi
         class MSE
         {
         };
-    }; // namespace Loss
-}; // namespace Tipousi
+    };  // namespace Loss
+};      // namespace Tipousi

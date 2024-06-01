@@ -1,9 +1,8 @@
 #pragma once
 
-#include <vector>
-#include <memory>
-
 #include "base/op.hpp"
+#include <memory>
+#include <vector>
 
 namespace Tipousi
 {
@@ -11,24 +10,31 @@ namespace Tipousi
     {
         class Node
         {
-        public:
+          public:
             template <typename T, typename... Args>
             static Node *create(Args &&...args)
             {
-                return new Node(std::make_unique<T>(std::forward<Args>(args)...));
+                return new Node(
+                    std::make_unique<T>(std::forward<Args>(args)...));
             }
 
-            void forward(const Eigen::MatrixXf &in, Eigen::MatrixXf &out);
+            void forward(Eigen::MatrixXf &data);
             void backward(const Eigen::MatrixXf &dout, Eigen::MatrixXf &ddout);
 
             void add_input(Node *node);
+            void add_output(Node *node);
 
-        private:
+            std::vector<Node *> &get_outputs() { return m_outputs; }
+            std::vector<Node *> &get_inputs() { return m_inputs; }
+
+          private:
             Node(std::unique_ptr<Op> ptr);
 
             std::unique_ptr<Op> m_operation;
             std::vector<Node *> m_inputs;
             std::vector<Node *> m_outputs;
+
+            Eigen::MatrixXf cache;
         };
-    }
-}
+    }  // namespace Graph
+}  // namespace Tipousi
