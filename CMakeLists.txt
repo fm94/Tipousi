@@ -1,9 +1,16 @@
 cmake_minimum_required(VERSION 3.0.0)
+
 project(Tipousi VERSION 0.0.1)
 
-# Set the default build type to Debug if not specified
+# Set the default build type to Release if not specified
 if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build" FORCE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build" FORCE)
+endif()
+
+# Set the runtime library for all targets
+if(MSVC)
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 endif()
 
 include_directories(
@@ -21,10 +28,11 @@ file(GLOB SOURCES "src/*/*.cpp")
 include_directories("${CMAKE_SOURCE_DIR}/externals/eigen-3.4.0")
 
 # Add Google Test
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 add_subdirectory(${CMAKE_SOURCE_DIR}/externals/googletest)
 enable_testing()
 
-add_library(Tipousi SHARED ${SOURCES})
+add_library(Tipousi STATIC ${SOURCES})
 # Ensure debug symbols are generated
 set_target_properties(Tipousi PROPERTIES COMPILE_FLAGS "-g")
 
