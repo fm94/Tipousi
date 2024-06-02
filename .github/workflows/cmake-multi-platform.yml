@@ -43,7 +43,7 @@ jobs:
       id: strings
       shell: bash
       run: |
-        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_ENV"
+        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
     - name: Configure CMake
       run: >
@@ -56,6 +56,12 @@ jobs:
     - name: Build
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 
-    - name: Test
+    - name: Test on Ubuntu
+      if: runner.os == 'Linux'
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: ./TTests
+
+    - name: Test on Windows
+      if: runner.os == 'Windows'
+      working-directory: ${{ steps.strings.outputs.build-output-dir }}/Release
+      run: .\TTests.exe
