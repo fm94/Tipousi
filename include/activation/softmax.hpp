@@ -9,7 +9,7 @@ namespace Tipousi
         class Softmax : public Op
         {
           public:
-            Softmax();
+            Softmax()           = default;
             ~Softmax() override = default;
 
             void forward(const Eigen::MatrixXf &in,

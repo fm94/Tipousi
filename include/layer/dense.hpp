@@ -18,6 +18,9 @@ namespace Tipousi
             void backward(const Eigen::MatrixXf &out_grad,
                           Eigen::MatrixXf       &in_grad) override;
 
+            Eigen::MatrixXf get_weights() { return m_weights; }
+            Eigen::MatrixXf get_bias() { return m_bias; }
+
           private:
             Eigen::MatrixXf m_weights;
             Eigen::MatrixXf m_bias;

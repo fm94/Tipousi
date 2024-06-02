@@ -27,5 +27,6 @@ namespace Tipousi
       protected:
         float           m_learning_rate;
         Eigen::MatrixXf m_current_inputs;
+        Eigen::MatrixXf m_current_outputs;
     };
 };  // namespace Tipousi
