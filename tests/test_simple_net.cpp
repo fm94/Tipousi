@@ -32,7 +32,8 @@ TEST(SimpleNetTest, SimpleCreation)
     node4->add_input(node3);  // node4 depends on node2
 
     // create the graph (pass input and output nodes)
-    Sequential net(node1, node4);
+    float      learning_rate{0.001};
+    Sequential net(node1, node4, learning_rate);
 
     // test inference
     int  n_samples{32};

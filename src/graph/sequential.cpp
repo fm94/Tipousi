@@ -4,7 +4,8 @@ namespace Tipousi
 {
     namespace Graph
     {
-        Sequential::Sequential(Node *input_node, Node *output_node)
+        Sequential::Sequential(Node *input_node, Node *output_node,
+                               float learning_rate)
             : m_input_node(input_node), m_output_node(output_node)
         {
             // mechanism to register all nodes
@@ -15,6 +16,7 @@ namespace Tipousi
                 if (current_node)
                 {
                     m_node_registry.push_back(current_node);
+                    current_node->set_learning_rate(learning_rate);
                     // TODO hacky approachs: always take number 0
                     auto &output_nodes = current_node->get_outputs();
                     if (output_nodes.size() == 0 || !output_nodes[0])

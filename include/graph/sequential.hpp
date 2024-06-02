@@ -11,7 +11,8 @@ namespace Tipousi
         {
 
           public:
-            Sequential(Node *input_node, Node *output_node);
+            Sequential(Node *input_node, Node *output_node,
+                       float learning_rate);
 
             ~Sequential()
             {

@@ -27,14 +27,17 @@ namespace Tipousi
             std::vector<Node *> &get_outputs() { return m_outputs; }
             std::vector<Node *> &get_inputs() { return m_inputs; }
 
+            void set_learning_rate(float learning_rate)
+            {
+                m_operation->set_learning_rate(learning_rate);
+            }
+
           private:
             Node(std::unique_ptr<Op> ptr);
 
             std::unique_ptr<Op> m_operation;
             std::vector<Node *> m_inputs;
             std::vector<Node *> m_outputs;
-
-            Eigen::MatrixXf cache;
         };
     }  // namespace Graph
 }  // namespace Tipousi
