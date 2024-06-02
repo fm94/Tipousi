@@ -15,20 +15,11 @@ namespace Tipousi
 
             ~Sequential()
             {
-                // travers all nodes in backward pass
+                // travers nodes in the registry
                 // and delete all of them sequentially
-                Node *current_node = m_output_node;
-                while (true)
+                for (Node *node : m_node_registry)
                 {
-                    // TODO : hacky approch deleting only first node
-                    // -> should be recursive
-                    auto input_nodes = current_node->get_inputs();
-                    if (input_nodes.size() == 0 || !input_nodes[0])
-                    {
-                        break;
-                    }
-                    delete current_node;
-                    current_node = input_nodes[0];
+                    delete node;
                 }
             }
 
@@ -36,8 +27,9 @@ namespace Tipousi
             void backward();
 
           private:
-            Node *m_input_node  = nullptr;
-            Node *m_output_node = nullptr;
+            Node               *m_input_node  = nullptr;
+            Node               *m_output_node = nullptr;
+            std::vector<Node *> m_node_registry{};
         };
 
     }  // namespace Graph

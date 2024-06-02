@@ -7,6 +7,23 @@ namespace Tipousi
         Sequential::Sequential(Node *input_node, Node *output_node)
             : m_input_node(input_node), m_output_node(output_node)
         {
+            // mechanism to register all nodes
+            // to handle destruction correction at the end
+            Node *current_node = m_input_node;
+            while (true)
+            {
+                if (current_node)
+                {
+                    m_node_registry.push_back(current_node);
+                    // TODO hacky approachs: always take number 0
+                    auto &output_nodes = current_node->get_outputs();
+                    if (output_nodes.size() == 0 || !output_nodes[0])
+                    {
+                        break;
+                    }
+                    current_node = output_nodes[0];
+                }
+            }
         }
 
         void Sequential::forward(const Eigen::MatrixXf &in,
@@ -22,7 +39,7 @@ namespace Tipousi
                 if (current_node)
                 {
                     // TODO hacky approachs: always take number 0
-                    auto output_nodes = current_node->get_outputs();
+                    auto &output_nodes = current_node->get_outputs();
                     if (output_nodes.size() == 0 || !output_nodes[0])
                     {
                         break;
@@ -31,7 +48,7 @@ namespace Tipousi
                     current_node = output_nodes[0];
                 }
             }
-            out = data_copy;
+            out = data_copy;  // copying happening?
         }
 
         void Sequential::backward()

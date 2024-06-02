@@ -4,7 +4,8 @@
 
 This is a WIP project that implements an entire deep learning framework from scratch in C++.</br>
 The goal is to implement as many layers and modules as possible and have a python interface at the end.</br>
-This will probably take some time but it would help me understand the tiny details behind many concepts. 
+This will probably take some time but it would help me understand the tiny details behind many concepts.</br>
+Currently the project builds a shared library (e.g., `libTipousi.so`) (that will hopefully be distributed and used with python at some point) and a tests executable `TTests`.
 
 
 ## Include externals (submodules)

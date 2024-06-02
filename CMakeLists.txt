@@ -16,11 +16,22 @@ include_directories(
 )
 
 # Source files
-file(GLOB SOURCES "src/*/*.cpp" tests/main.cpp)
+file(GLOB SOURCES "src/*/*.cpp")
 
 include_directories("${CMAKE_SOURCE_DIR}/externals/eigen-3.4.0")
 
-add_executable(Tipousi ${SOURCES})
+# Add Google Test
+add_subdirectory(${CMAKE_SOURCE_DIR}/externals/googletest)
+enable_testing()
 
+add_library(Tipousi SHARED ${SOURCES})
 # Ensure debug symbols are generated
 set_target_properties(Tipousi PROPERTIES COMPILE_FLAGS "-g")
+
+# Add test executable
+file(GLOB TEST_SOURCES "tests/*.cpp")
+list(REMOVE_ITEM TEST_SOURCES "${CMAKE_SOURCE_DIR}/tests/main.cpp")
+
+add_executable(TTests tests/main.cpp ${TEST_SOURCES})
+target_link_libraries(TTests Tipousi gtest gtest_main)
+add_test(NAME TTests COMMAND TTests)
