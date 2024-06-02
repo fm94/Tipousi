@@ -8,10 +8,10 @@ using namespace Layer;
 TEST(DenseLayerTest, ForwardPass)
 {
     Dense dense(3, 2);
-    dense.set_learning_rate(0.01);
+    dense.set_learning_rate(0.01f);
 
     Eigen::MatrixXf input(1, 3);
-    input << 1.0, 2.0, 3.0;
+    input << 1.0f, 2.0f, 3.0f;
     Eigen::MatrixXf output(1, 2);
 
     dense.forward(input, output);
@@ -24,16 +24,16 @@ TEST(DenseLayerTest, ForwardPass)
 TEST(DenseLayerTest, BackwardPass)
 {
     Dense dense(3, 2);
-    dense.set_learning_rate(0.01);
+    dense.set_learning_rate(0.01f);
 
     Eigen::MatrixXf input(1, 3);
-    input << 1.0, 2.0, 3.0;
+    input << 1.0f, 2.0f, 3.0f;
     Eigen::MatrixXf output(1, 2);
 
     dense.forward(input, output);
 
     Eigen::MatrixXf dout(1, 2);
-    dout << 0.1, 0.2;
+    dout << 0.1f, 0.2f;
     Eigen::MatrixXf din(1, 3);
     dense.backward(dout, din);
 
