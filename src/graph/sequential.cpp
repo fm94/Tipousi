@@ -1,4 +1,5 @@
 #include "graph/sequential.hpp"
+#include <iostream>
 
 namespace Tipousi
 {
@@ -56,6 +57,30 @@ namespace Tipousi
         void Sequential::backward()
         {
             //
+        }
+
+        void Sequential::train(const Data::Dataset            &dataset,
+                               const Optimizer::OptimizerBase &optimizer,
+                               const Loss::LossBase           &loss_func,
+                               const uint32_t                  n_epochs)
+        {
+            for (uint32_t i{0}; i < n_epochs; i++)
+            {
+                float total_loss = 0.0f;
+                uint32_t counter{0};
+                for (const auto &[x, y] : dataset)
+                {
+                    Eigen::MatrixXf output;
+                    Eigen::MatrixXf out_grad;
+                    forward(x, output);
+                    total_loss += loss_func.compute(y, output);
+                    loss_func.grad(out_grad, y, output);
+                    backward();
+                    counter++;
+                }
+                std::cout << "Epoch: " << i
+                          << ", Loss: " << total_loss / counter << std::endl;
+            }
         }
 
     }  // namespace Graph

@@ -1,13 +1,14 @@
 #pragma once
 
 #include "graph/node.hpp"
+#include "graph/trainable.hpp"
 #include <vector>
 
 namespace Tipousi
 {
     namespace Graph
     {
-        class Sequential
+        class Sequential : public Trainable
         {
 
           public:
@@ -26,6 +27,11 @@ namespace Tipousi
 
             void forward(const Eigen::MatrixXf &in, Eigen::MatrixXf &out);
             void backward();
+
+            void train(const Data::Dataset            &dataset,
+                       const Optimizer::OptimizerBase &optimizer,
+                       const Loss::LossBase           &loss,
+                       const uint32_t                  n_epochs) override;
 
           private:
             Node               *m_input_node  = nullptr;

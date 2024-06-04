@@ -2,10 +2,10 @@
 
 namespace Tipousi
 {
-    namespace Loss
+    namespace Optimizer
     {
-        class MyTemplate
+        class OptimizerBase
         {
         };
-    };  // namespace Loss
+    };  // namespace Optimizer
 };      // namespace Tipousi
