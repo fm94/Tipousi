@@ -9,7 +9,7 @@ namespace Tipousi
         class Dataset
         {
           public:
-            Dataset(const Eigen::MatrixXd &X, const Eigen::MatrixXd &Y);
+            Dataset(const Eigen::MatrixXf &X, const Eigen::MatrixXf &Y);
             ~Dataset() = default;
 
             using DataPair = std::pair<Eigen::MatrixXf, Eigen::MatrixXf>;
@@ -17,15 +17,15 @@ namespace Tipousi
             class Iterator
             {
               public:
-                Iterator(const Eigen::MatrixXd &X, const Eigen::MatrixXd &Y,
+                Iterator(const Eigen::MatrixXf &X, const Eigen::MatrixXf &Y,
                          size_t index);
                 Iterator &operator++();
                 bool      operator!=(const Iterator &other) const;
                 DataPair  operator*() const;
 
               private:
-                const Eigen::MatrixXd &m_X;
-                const Eigen::MatrixXd &m_y;
+                const Eigen::MatrixXf &m_X;
+                const Eigen::MatrixXf &m_y;
                 size_t                 m_index;
             };
 
@@ -33,8 +33,8 @@ namespace Tipousi
             Iterator end() const;
 
           private:
-            Eigen::MatrixXd m_X;
-            Eigen::MatrixXd m_y;
+            Eigen::MatrixXf m_X;
+            Eigen::MatrixXf m_y;
         };
     };  // namespace Data
 };      // namespace Tipousi

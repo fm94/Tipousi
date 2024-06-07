@@ -20,13 +20,13 @@ namespace Tipousi
 
             // if we have mutliple inputs then save forward computations by
             // caching the current data. Experimental!!!
-            if (m_outputs.size() > 1)
-            {
+            //if (m_outputs.size() > 1)
+            // {
                 // m_cache
-            }
+            // }
         }
 
-        void Node::backward(const Eigen::MatrixXf &dout, Eigen::MatrixXf &ddout)
+        void Node::backward(Eigen::MatrixXf &grads)
         {
             // std::vector<float> grad_input =
             // m_operation->backward(grad_output); for (auto *input_node :
@@ -36,7 +36,7 @@ namespace Tipousi
             // }
 
             // TODO this is a fake call that is used only if the node has one Op
-            m_operation->backward(dout, ddout);
+            m_operation->backward(grads, grads);
         }
 
         void Node::add_input(Node *node)

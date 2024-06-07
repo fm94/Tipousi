@@ -4,13 +4,13 @@ namespace Tipousi
 {
     namespace Data
     {
-        Dataset::Dataset(const Eigen::MatrixXd &X, const Eigen::MatrixXd &Y)
+        Dataset::Dataset(const Eigen::MatrixXf &X, const Eigen::MatrixXf &Y)
             : m_X(X), m_y(Y)
         {
         }
 
-        Dataset::Iterator::Iterator(const Eigen::MatrixXd &X,
-                                    const Eigen::MatrixXd &Y, size_t index)
+        Dataset::Iterator::Iterator(const Eigen::MatrixXf &X,
+                                    const Eigen::MatrixXf &Y, size_t index)
             : m_X(X), m_y(Y), m_index(index)
         {
         }

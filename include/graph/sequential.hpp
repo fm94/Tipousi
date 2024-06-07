@@ -26,7 +26,7 @@ namespace Tipousi
             }
 
             void forward(const Eigen::MatrixXf &in, Eigen::MatrixXf &out);
-            void backward();
+            void backward(Eigen::MatrixXf &initial_grads);
 
             void train(const Data::Dataset            &dataset,
                        const Optimizer::OptimizerBase &optimizer,

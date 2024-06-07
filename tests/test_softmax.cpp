@@ -17,7 +17,7 @@ TEST(SoftmaxLayerTest, ForwardPass)
     Eigen::MatrixXf expected_output(2, 2);
     expected_output << 0.268941f, 0.731059f, 0.268941f, 0.731059f;
 
-    expectEigenMatrixNear(output, expected_output, 1e-5);
+    expectEigenMatrixNear(output, expected_output, 1e-5f);
 }
 
 TEST(SoftmaxLayerTest, BackwardPass)
@@ -39,5 +39,5 @@ TEST(SoftmaxLayerTest, BackwardPass)
     Eigen::MatrixXf expected_in_grad(2, 2);
     expected_in_grad << 0.0393f, -0.0393f, 0.0393f, -0.0393f;
 
-    expectEigenMatrixNear(in_grad, expected_in_grad, 1e-3);
+    expectEigenMatrixNear(in_grad, expected_in_grad, 1e-3f);
 }

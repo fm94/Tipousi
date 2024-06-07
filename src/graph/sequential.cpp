@@ -32,6 +32,8 @@ namespace Tipousi
         void Sequential::forward(const Eigen::MatrixXf &in,
                                  Eigen::MatrixXf       &out)
         {
+            // in should be const?
+            // 
             // copy to create the object that will be passed through the network
             // while keeping the original data intact
             Eigen::MatrixXf data_copy    = in;
@@ -54,9 +56,26 @@ namespace Tipousi
             out = data_copy;  // copying happening?
         }
 
-        void Sequential::backward()
+        void Sequential::backward(Eigen::MatrixXf &initial_grads)
         {
-            //
+            // think if copying is really needed here
+            Eigen::MatrixXf grad_copy    = initial_grads;
+            Node           *current_node = m_output_node;
+            // continue until no more nodes
+            while (true)
+            {
+                if (current_node)
+                {
+                    // TODO hacky approachs: always take number 0
+                    auto &input_nodes = current_node->get_inputs();
+                    if (input_nodes.size() == 0 || !input_nodes[0])
+                    {
+                        break;
+                    }
+                    current_node->backward(grad_copy);
+                    current_node = input_nodes[0];
+                }
+            }
         }
 
         void Sequential::train(const Data::Dataset            &dataset,
@@ -75,7 +94,7 @@ namespace Tipousi
                     forward(x, output);
                     total_loss += loss_func.compute(y, output);
                     loss_func.grad(out_grad, y, output);
-                    backward();
+                    backward(out_grad);
                     counter++;
                 }
                 std::cout << "Epoch: " << i

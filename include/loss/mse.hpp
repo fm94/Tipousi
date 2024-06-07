@@ -7,6 +7,7 @@ namespace Tipousi
     {
         class MSE : public LossBase
         {
+          public:
             MSE()  = default;
             ~MSE() = default;
 

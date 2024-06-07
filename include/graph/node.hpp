@@ -19,7 +19,7 @@ namespace Tipousi
             }
 
             void forward(Eigen::MatrixXf &data);
-            void backward(const Eigen::MatrixXf &dout, Eigen::MatrixXf &ddout);
+            void backward(Eigen::MatrixXf &grads);
 
             void add_input(Node *node);
             void add_output(Node *node);
