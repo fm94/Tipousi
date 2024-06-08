@@ -9,8 +9,11 @@ namespace Tipousi
         class SGD : public OptimizerBase
         {
           public:
-            SGD();
+            SGD(const float learning_rate);
             ~SGD() = default;
+
+            void update_weights(Eigen::MatrixXf &weights,
+                                Eigen::MatrixXf &grads) override;
         };
     };  // namespace Optimizer
 };      // namespace Tipousi

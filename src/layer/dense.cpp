@@ -24,8 +24,9 @@ namespace Tipousi
             Eigen::MatrixXf weight_grad =
                 m_current_inputs.transpose() * out_grad;
             Eigen::MatrixXf bias_grad = out_grad.colwise().sum();
-            m_weights -= m_learning_rate * weight_grad;
-            m_bias.row(0) -= m_learning_rate * bias_grad;
+            m_optimizer->update_weights(m_weights, weight_grad);
+            // .row(0) has been removed here! check whether it has "no" effect
+            m_optimizer->update_weights(m_bias, bias_grad);
             in_grad = out_grad * m_weights.transpose();
         }
     }  // namespace Layer

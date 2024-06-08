@@ -26,9 +26,9 @@ TEST(SimpleNetTest, XORTest)
     int n_features{2};
     int n_labels{1};
 
-    Node *node1 = Node::create<Dense>(n_features, 32);
-    Node *node2 = Node::create<ReLU>();
-    Node *node3 = Node::create<Dense>(32, n_labels);
+    Node *node1 = Node::create<Dense>(n_features, 16);
+    Node *node2 = Node::create<Sigmoid>();
+    Node *node3 = Node::create<Dense>(16, n_labels);
     Node *node4 = Node::create<Sigmoid>();
 
     // build the dependencies
@@ -36,9 +36,11 @@ TEST(SimpleNetTest, XORTest)
     node3->add_input(node2);
     node4->add_input(node3);
 
+    float learning_rate{0.5f};
+    SGD   sgd(learning_rate);
+
     // create the graph (pass input and output nodes)
-    float      learning_rate{0.01f};
-    Sequential net(node1, node4, learning_rate);
+    Sequential net(node1, node4, &sgd);
 
     // test inference
     Eigen::MatrixXf X(4, 2);
@@ -51,11 +53,10 @@ TEST(SimpleNetTest, XORTest)
     // create dataset
     Dataset dataset(X, Y);
 
-    // define the optimizer and the loss
-    SGD  sgd;  // dummy
+    // define the loss
     MSE  mse;
     auto start = std::chrono::high_resolution_clock::now();
-    net.train(dataset, sgd, mse, 50);
+    net.train(dataset, mse, 200);
     auto end = std::chrono::high_resolution_clock::now();
     auto duration =
         std::chrono::duration_cast<std::chrono::microseconds>(end - start)
@@ -80,5 +81,5 @@ TEST(SimpleNetTest, XORTest)
 
     std::cout << "gt: " << Y << std::endl;
     std::cout << "predictions: " << preds << std::endl;
-    EXPECT_LT(loss, 1);
+    EXPECT_LT(loss, 0.5f);  // better than random guessing
 }

@@ -6,7 +6,7 @@ namespace Tipousi
     namespace Graph
     {
         Sequential::Sequential(Node *input_node, Node *output_node,
-                               float learning_rate)
+                               Optimizer::OptimizerBase *optimizer)
             : m_input_node(input_node), m_output_node(output_node)
         {
             // mechanism to register all nodes
@@ -16,8 +16,8 @@ namespace Tipousi
             {
                 if (current_node)
                 {
+                    current_node->set_optimizer(optimizer);
                     m_node_registry.push_back(current_node);
-                    current_node->set_learning_rate(learning_rate);
                     // TODO hacky approachs: always take number 0
                     auto &output_nodes = current_node->get_outputs();
                     if (output_nodes.size() == 0 || !output_nodes[0])
@@ -78,10 +78,9 @@ namespace Tipousi
             }
         }
 
-        void Sequential::train(const Data::Dataset            &dataset,
-                               const Optimizer::OptimizerBase &optimizer,
-                               const Loss::LossBase           &loss_func,
-                               const uint32_t                  n_epochs)
+        void Sequential::train(const Data::Dataset  &dataset,
+                               const Loss::LossBase &loss_func,
+                               const uint32_t        n_epochs)
         {
             for (uint32_t i{0}; i < n_epochs; i++)
             {

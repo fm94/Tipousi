@@ -2,6 +2,7 @@
 
 #include "graph/node.hpp"
 #include "graph/trainable.hpp"
+#include "optimizer/base.hpp"
 #include <vector>
 
 namespace Tipousi
@@ -13,7 +14,7 @@ namespace Tipousi
 
           public:
             Sequential(Node *input_node, Node *output_node,
-                       float learning_rate);
+                       Optimizer::OptimizerBase *optimizer);
 
             ~Sequential()
             {
@@ -28,10 +29,8 @@ namespace Tipousi
             void forward(const Eigen::MatrixXf &in, Eigen::MatrixXf &out);
             void backward(Eigen::MatrixXf &initial_grads);
 
-            void train(const Data::Dataset            &dataset,
-                       const Optimizer::OptimizerBase &optimizer,
-                       const Loss::LossBase           &loss,
-                       const uint32_t                  n_epochs) override;
+            void train(const Data::Dataset &dataset, const Loss::LossBase &loss,
+                       const uint32_t n_epochs) override;
 
           private:
             Node               *m_input_node  = nullptr;

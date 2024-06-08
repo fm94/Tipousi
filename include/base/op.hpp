@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "optimizer/base.hpp"
 #include <Eigen/Dense>
 
 namespace Tipousi
@@ -19,14 +20,15 @@ namespace Tipousi
         virtual void backward(const Eigen::MatrixXf &out_grad,
                               Eigen::MatrixXf       &in_grad) = 0;
 
-        void set_learning_rate(float learning_rate)
+        void set_optimizer(Optimizer::OptimizerBase *optimizer)
         {
-            m_learning_rate = learning_rate;
-        }
+            m_optimizer = optimizer;
+        };
 
       protected:
-        float           m_learning_rate;
         Eigen::MatrixXf m_current_inputs;
         Eigen::MatrixXf m_current_outputs;
+
+        Optimizer::OptimizerBase *m_optimizer;
     };
 };  // namespace Tipousi

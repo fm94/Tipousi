@@ -1,14 +1,18 @@
 #include "layer/dense.hpp"
+#include "optimizer/sgd.hpp"
 #include "utils.hpp"
 #include <gtest/gtest.h>
 
 using namespace Tipousi;
 using namespace Layer;
+using namespace Optimizer;
 
 TEST(DenseLayerTest, ForwardPass)
 {
     Dense dense(3, 2);
-    dense.set_learning_rate(0.01f);
+
+    SGD sgd(0.01f);
+    dense.set_optimizer(&sgd);
 
     Eigen::MatrixXf input(1, 3);
     input << 1.0f, 2.0f, 3.0f;
@@ -24,7 +28,9 @@ TEST(DenseLayerTest, ForwardPass)
 TEST(DenseLayerTest, BackwardPass)
 {
     Dense dense(3, 2);
-    dense.set_learning_rate(0.01f);
+
+    SGD sgd(0.01f);
+    dense.set_optimizer(&sgd);
 
     Eigen::MatrixXf input(1, 3);
     input << 1.0f, 2.0f, 3.0f;

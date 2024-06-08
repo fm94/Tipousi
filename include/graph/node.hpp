@@ -1,6 +1,7 @@
 #pragma once
 
 #include "base/op.hpp"
+#include "optimizer/base.hpp"
 #include <memory>
 #include <vector>
 
@@ -24,13 +25,10 @@ namespace Tipousi
             void add_input(Node *node);
             void add_output(Node *node);
 
+            void set_optimizer(Optimizer::OptimizerBase *optimizer);
+
             std::vector<Node *> &get_outputs() { return m_outputs; }
             std::vector<Node *> &get_inputs() { return m_inputs; }
-
-            void set_learning_rate(float learning_rate)
-            {
-                m_operation->set_learning_rate(learning_rate);
-            }
 
           private:
             Node(std::unique_ptr<Op> ptr);

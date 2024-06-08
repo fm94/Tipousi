@@ -25,17 +25,19 @@ TEST(SimpleNetTest, AdderTest)
     int n_features{2};
     int n_labels{1};
 
-    Node *node1 = Node::create<Dense>(n_features, 32);
+    Node *node1 = Node::create<Dense>(n_features, 16);
     Node *node2 = Node::create<ReLU>();
-    Node *node3 = Node::create<Dense>(32, n_labels);
+    Node *node3 = Node::create<Dense>(16, n_labels);
 
     // build the dependencies
     node2->add_input(node1);
     node3->add_input(node2);
 
+    float learning_rate{0.01f};
+    SGD   sgd(learning_rate);
+
     // create the graph (pass input and output nodes)
-    float      learning_rate{0.005f};
-    Sequential net(node1, node3, learning_rate);
+    Sequential net(node1, node3, &sgd);
 
     // test inference
     Eigen::MatrixXf X(4, 2);
@@ -48,11 +50,10 @@ TEST(SimpleNetTest, AdderTest)
     // create dataset
     Dataset dataset(X, Y);
 
-    // define the optimizer and the loss
-    SGD  sgd;  // dummy
+    // define the loss
     MSE  mse;
     auto start = std::chrono::high_resolution_clock::now();
-    net.train(dataset, sgd, mse, 50);
+    net.train(dataset, mse, 50);
     auto end = std::chrono::high_resolution_clock::now();
     auto duration =
         std::chrono::duration_cast<std::chrono::microseconds>(end - start)
@@ -77,5 +78,5 @@ TEST(SimpleNetTest, AdderTest)
 
     std::cout << "gt: " << Y << std::endl;
     std::cout << "predictions: " << preds << std::endl;
-    EXPECT_LT(loss, 1);
+    EXPECT_LT(loss, 0.02f);
 }
