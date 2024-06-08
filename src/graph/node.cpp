@@ -46,7 +46,7 @@ namespace Tipousi
 
         void Node::add_output(Node *node) { m_outputs.push_back(node); }
 
-        void Node::set_optimizer(Optimizer::OptimizerBase *optimizer)
+        void Node::set_optimizer(Optimizer::OptimizerBase &optimizer)
         {
             m_operation->set_optimizer(optimizer);
         }

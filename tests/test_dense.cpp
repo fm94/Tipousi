@@ -12,7 +12,7 @@ TEST(DenseLayerTest, ForwardPass)
     Dense dense(3, 2);
 
     SGD sgd(0.01f);
-    dense.set_optimizer(&sgd);
+    dense.set_optimizer(sgd);
 
     Eigen::MatrixXf input(1, 3);
     input << 1.0f, 2.0f, 3.0f;
@@ -30,7 +30,7 @@ TEST(DenseLayerTest, BackwardPass)
     Dense dense(3, 2);
 
     SGD sgd(0.01f);
-    dense.set_optimizer(&sgd);
+    dense.set_optimizer(sgd);
 
     Eigen::MatrixXf input(1, 3);
     input << 1.0f, 2.0f, 3.0f;

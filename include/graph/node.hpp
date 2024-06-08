@@ -25,7 +25,7 @@ namespace Tipousi
             void add_input(Node *node);
             void add_output(Node *node);
 
-            void set_optimizer(Optimizer::OptimizerBase *optimizer);
+            void set_optimizer(Optimizer::OptimizerBase &optimizer);
 
             std::vector<Node *> &get_outputs() { return m_outputs; }
             std::vector<Node *> &get_inputs() { return m_inputs; }

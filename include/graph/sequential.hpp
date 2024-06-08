@@ -14,7 +14,7 @@ namespace Tipousi
 
           public:
             Sequential(Node *input_node, Node *output_node,
-                       Optimizer::OptimizerBase *optimizer);
+                       Optimizer::OptimizerBase &optimizer);
 
             ~Sequential()
             {

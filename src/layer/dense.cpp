@@ -1,4 +1,5 @@
 #include "layer/dense.hpp"
+#include "dense.hpp"
 #include <iostream>
 
 namespace Tipousi
@@ -24,10 +25,17 @@ namespace Tipousi
             Eigen::MatrixXf weight_grad =
                 m_current_inputs.transpose() * out_grad;
             Eigen::MatrixXf bias_grad = out_grad.colwise().sum();
-            m_optimizer->update_weights(m_weights, weight_grad);
+            m_optimizers.at(0)->update_weights(m_weights, weight_grad);
             // .row(0) has been removed here! check whether it has "no" effect
-            m_optimizer->update_weights(m_bias, bias_grad);
+            m_optimizers.at(1)->update_weights(m_bias, bias_grad);
             in_grad = out_grad * m_weights.transpose();
         }
+
+        void Dense::set_optimizer(Optimizer::OptimizerBase &optimizer)
+        {
+            // we need two optimizers for weights and biases
+            m_optimizers.emplace_back(optimizer.clone());
+            m_optimizers.emplace_back(optimizer.clone());
+        };
     }  // namespace Layer
 }  // namespace Tipousi

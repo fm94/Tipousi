@@ -6,6 +6,7 @@
 
 #include "optimizer/base.hpp"
 #include <Eigen/Dense>
+#include <memory>
 
 namespace Tipousi
 {
@@ -20,15 +21,15 @@ namespace Tipousi
         virtual void backward(const Eigen::MatrixXf &out_grad,
                               Eigen::MatrixXf       &in_grad) = 0;
 
-        void set_optimizer(Optimizer::OptimizerBase *optimizer)
+        virtual void set_optimizer(Optimizer::OptimizerBase &optimizer)
         {
-            m_optimizer = optimizer;
+            m_optimizers.emplace_back(optimizer.clone());
         };
 
       protected:
         Eigen::MatrixXf m_current_inputs;
         Eigen::MatrixXf m_current_outputs;
 
-        Optimizer::OptimizerBase *m_optimizer;
+        std::vector<std::unique_ptr<Optimizer::OptimizerBase>> m_optimizers{};
     };
 };  // namespace Tipousi
