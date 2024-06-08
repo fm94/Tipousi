@@ -1,5 +1,4 @@
 #include "activation/relu.hpp"
-#include "activation/sigmoid.hpp"
 #include "data/dataset.hpp"
 #include "graph/node.hpp"
 #include "graph/sequential.hpp"
@@ -19,9 +18,9 @@ using namespace Loss;
 using namespace Data;
 using namespace Optimizer;
 
-TEST(SimpleNetTest, XORTest)
+TEST(SimpleNetTest, AdderTest)
 {
-    // in this test we try to train a net to learn the xor operation
+    // in this test we try to train a net to learn the addition operation
     // we have two inputs and one output
     int n_features{2};
     int n_labels{1};
@@ -29,24 +28,22 @@ TEST(SimpleNetTest, XORTest)
     Node *node1 = Node::create<Dense>(n_features, 32);
     Node *node2 = Node::create<ReLU>();
     Node *node3 = Node::create<Dense>(32, n_labels);
-    Node *node4 = Node::create<Sigmoid>();
 
     // build the dependencies
     node2->add_input(node1);
     node3->add_input(node2);
-    node4->add_input(node3);
 
     // create the graph (pass input and output nodes)
-    float      learning_rate{0.01f};
-    Sequential net(node1, node4, learning_rate);
+    float      learning_rate{0.005f};
+    Sequential net(node1, node3, learning_rate);
 
     // test inference
     Eigen::MatrixXf X(4, 2);
     Eigen::MatrixXf Y(4, 1);
-    // XOR inputs
-    X << 0, 0, 0, 1, 1, 0, 1, 1;
-    // XOR outputs (labels)
-    Y << 0, 1, 1, 0;
+
+    // y is just the summation of two x inputs
+    X << 1, 1, 1, 2, 2, 1, 2, 2;
+    Y << 2, 3, 3, 4;
 
     // create dataset
     Dataset dataset(X, Y);

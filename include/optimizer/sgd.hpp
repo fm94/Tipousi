@@ -1,4 +1,5 @@
 #pragma once
+
 #include "optimizer/base.hpp"
 
 namespace Tipousi

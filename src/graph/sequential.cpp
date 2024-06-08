@@ -33,7 +33,7 @@ namespace Tipousi
                                  Eigen::MatrixXf       &out)
         {
             // in should be const?
-            // 
+            //
             // copy to create the object that will be passed through the network
             // while keeping the original data intact
             Eigen::MatrixXf data_copy    = in;
@@ -43,13 +43,13 @@ namespace Tipousi
             {
                 if (current_node)
                 {
+                    current_node->forward(data_copy);
                     // TODO hacky approachs: always take number 0
                     auto &output_nodes = current_node->get_outputs();
                     if (output_nodes.size() == 0 || !output_nodes[0])
                     {
                         break;
                     }
-                    current_node->forward(data_copy);
                     current_node = output_nodes[0];
                 }
             }
@@ -66,13 +66,13 @@ namespace Tipousi
             {
                 if (current_node)
                 {
+                    current_node->backward(grad_copy);
                     // TODO hacky approachs: always take number 0
                     auto &input_nodes = current_node->get_inputs();
                     if (input_nodes.size() == 0 || !input_nodes[0])
                     {
                         break;
                     }
-                    current_node->backward(grad_copy);
                     current_node = input_nodes[0];
                 }
             }
@@ -85,7 +85,7 @@ namespace Tipousi
         {
             for (uint32_t i{0}; i < n_epochs; i++)
             {
-                float total_loss = 0.0f;
+                float    total_loss = 0.0f;
                 uint32_t counter{0};
                 for (const auto &[x, y] : dataset)
                 {
@@ -94,6 +94,10 @@ namespace Tipousi
                     forward(x, output);
                     total_loss += loss_func.compute(y, output);
                     loss_func.grad(out_grad, y, output);
+                    // std::cout << "gt " << y << std::endl;
+                    // std::cout << "pred " << output << std::endl;
+                    // std::cout << "loss " << total_loss << std::endl;
+                    // std::cout << "grad " << out_grad << std::endl;
                     backward(out_grad);
                     counter++;
                 }

@@ -6,11 +6,11 @@ namespace Tipousi
 {
     namespace Activation
     {
-        class Softmax : public Op
+        class Sigmoid : public Op
         {
           public:
-            Softmax()           = default;
-            ~Softmax() override = default;
+            Sigmoid()           = default;
+            ~Sigmoid() override = default;
 
             void forward(const Eigen::MatrixXf &in,
                          Eigen::MatrixXf       &out) override;

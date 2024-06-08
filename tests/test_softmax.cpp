@@ -1,5 +1,4 @@
 #include "activation/softmax.hpp"
-#include "utils.hpp"
 #include <gtest/gtest.h>
 
 using namespace Tipousi;
@@ -7,37 +6,37 @@ using namespace Activation;
 
 TEST(SoftmaxLayerTest, ForwardPass)
 {
+    Eigen::MatrixXf in(2, 3);
+    in << 1.0, 2.0, 3.0, 1.0, 2.0, -1.0;
+
+    Eigen::MatrixXf out;
     Softmax         softmax;
-    Eigen::MatrixXf input(2, 2);
-    input << 1.0f, 2.0f, 3.0f, 4.0f;
+    softmax.forward(in, out);
 
-    Eigen::MatrixXf output;
-    softmax.forward(input, output);
+    Eigen::MatrixXf expected(2, 3);
+    expected << 0.0900306, 0.244728, 0.665241, 0.259496, 0.705385, 0.035119;
 
-    Eigen::MatrixXf expected_output(2, 2);
-    expected_output << 0.268941f, 0.731059f, 0.268941f, 0.731059f;
-
-    expectEigenMatrixNear(output, expected_output, 1e-5f);
+    ASSERT_TRUE(out.isApprox(expected, 1e-5));
 }
 
 TEST(SoftmaxLayerTest, BackwardPass)
 {
+    Eigen::MatrixXf in(2, 3);
+    in << 1.0, 2.0, 3.0, 1.0, 2.0, -1.0;
+
+    Eigen::MatrixXf dout(2, 3);
+    dout << 0.1, 0.2, 0.7, 0.3, 0.4, 0.3;
+
+    Eigen::MatrixXf out;
     Softmax         softmax;
-    Eigen::MatrixXf input(2, 2);
-    input << 1.0f, 2.0f, 3.0f, 4.0f;
+    softmax.forward(in, out);
 
-    Eigen::MatrixXf output;
-    softmax.forward(input, output);
+    Eigen::MatrixXf ddout;
+    softmax.backward(dout, ddout);
 
-    Eigen::MatrixXf out_grad(2, 2);
-    out_grad << 0.1f, -0.1f, 0.1f, -0.1f;
+    // manually computed expected ddout values
+    Eigen::MatrixXf expected(2, 3);
+    expected << -0.038138, -0.079198, 0.117337, -0.018304, 0.020781, -0.002477;
 
-    Eigen::MatrixXf in_grad;
-    softmax.backward(out_grad, in_grad);
-
-    // manually calculated
-    Eigen::MatrixXf expected_in_grad(2, 2);
-    expected_in_grad << 0.0393f, -0.0393f, 0.0393f, -0.0393f;
-
-    expectEigenMatrixNear(in_grad, expected_in_grad, 1e-3f);
+    ASSERT_TRUE(ddout.isApprox(expected, 1e-4));
 }

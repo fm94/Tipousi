@@ -14,15 +14,14 @@ namespace Tipousi
             //     input_data.insert(input_data.end(), input_result.begin(),
             //     input_result.end());
             // }
-
             // TODO this is a fake call that is used only if the node has one Op
             m_operation->forward(data, data);
 
             // if we have mutliple inputs then save forward computations by
             // caching the current data. Experimental!!!
-            //if (m_outputs.size() > 1)
+            // if (m_outputs.size() > 1)
             // {
-                // m_cache
+            // m_cache
             // }
         }
 
@@ -34,7 +33,6 @@ namespace Tipousi
             // {
             //     input_node->backward(grad_input);
             // }
-
             // TODO this is a fake call that is used only if the node has one Op
             m_operation->backward(grads, grads);
         }
