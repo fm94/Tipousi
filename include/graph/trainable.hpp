@@ -11,7 +11,7 @@ namespace Tipousi
         class Trainable
         {
           public:
-            virtual void train(const Data::Dataset  &dataset,
+            virtual void train(Data::Dataset        &dataset,
                                const Loss::LossBase &loss,
                                const uint32_t        n_epochs) = 0;
 

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Eigen/Dense>
+#include <algorithm>
+#include <random>
 #include <vector>
 
 namespace Tipousi
@@ -10,8 +12,11 @@ namespace Tipousi
         class Dataset
         {
           public:
-            Dataset(const Eigen::MatrixXf &X, const Eigen::MatrixXf &Y);
+            Dataset(const Eigen::MatrixXf &X, const Eigen::MatrixXf &Y,
+                    size_t batch_size);
             ~Dataset() = default;
+
+            void shuffle();
 
             using DataPair = std::pair<Eigen::MatrixXf, Eigen::MatrixXf>;
 
@@ -19,7 +24,7 @@ namespace Tipousi
             {
               public:
                 Iterator(const Eigen::MatrixXf &X, const Eigen::MatrixXf &Y,
-                         size_t index);
+                         size_t index, size_t batch_size);
                 Iterator &operator++();
                 bool      operator!=(const Iterator &other) const;
                 DataPair  operator*() const;
@@ -28,6 +33,7 @@ namespace Tipousi
                 const Eigen::MatrixXf &m_X;
                 const Eigen::MatrixXf &m_y;
                 size_t                 m_index;
+                size_t                 m_batch_size;
             };
 
             Iterator begin() const;
@@ -36,6 +42,7 @@ namespace Tipousi
           private:
             Eigen::MatrixXf m_X;
             Eigen::MatrixXf m_y;
+            size_t          m_batch_size;
         };
     };  // namespace Data
 };      // namespace Tipousi

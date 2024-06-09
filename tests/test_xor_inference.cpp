@@ -5,7 +5,7 @@
 #include "graph/sequential.hpp"
 #include "layer/dense.hpp"
 #include "loss/mse.hpp"
-#include "optimizer/sgd.hpp"
+#include "optimizer/adam.hpp"
 #include <chrono>
 #include <gtest/gtest.h>
 #include <iostream>
@@ -36,11 +36,11 @@ TEST(SimpleNetTest, XORTest)
     node3->add_input(node2);
     node4->add_input(node3);
 
-    float learning_rate{0.5f};
-    SGD   sgd(learning_rate);
+    float learning_rate{0.08f};
+    Adam  optimizer(learning_rate);
 
     // create the graph (pass input and output nodes)
-    Sequential net(node1, node4, sgd);
+    Sequential net(node1, node4, optimizer);
 
     // test inference
     Eigen::MatrixXf X(4, 2);
@@ -51,12 +51,13 @@ TEST(SimpleNetTest, XORTest)
     Y << 0, 1, 1, 0;
 
     // create dataset
-    Dataset dataset(X, Y);
+    size_t  batch_size = 3;
+    Dataset dataset(X, Y, batch_size);
 
     // define the loss
     MSE  mse;
     auto start = std::chrono::high_resolution_clock::now();
-    net.train(dataset, mse, 200);
+    net.train(dataset, mse, 100);
     auto end = std::chrono::high_resolution_clock::now();
     auto duration =
         std::chrono::duration_cast<std::chrono::microseconds>(end - start)

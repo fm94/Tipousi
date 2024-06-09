@@ -48,7 +48,8 @@ TEST(SimpleNetTest, AdderTest)
     Y << 2, 3, 3, 4;
 
     // create dataset
-    Dataset dataset(X, Y);
+    size_t  batch_size = 1;
+    Dataset dataset(X, Y, batch_size);
 
     // define the loss
     MSE  mse;

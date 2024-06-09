@@ -29,7 +29,7 @@ namespace Tipousi
             void forward(const Eigen::MatrixXf &in, Eigen::MatrixXf &out);
             void backward(Eigen::MatrixXf &initial_grads);
 
-            void train(const Data::Dataset &dataset, const Loss::LossBase &loss,
+            void train(Data::Dataset &dataset, const Loss::LossBase &loss,
                        const uint32_t n_epochs) override;
 
           private:

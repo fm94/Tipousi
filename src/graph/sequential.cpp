@@ -78,7 +78,7 @@ namespace Tipousi
             }
         }
 
-        void Sequential::train(const Data::Dataset  &dataset,
+        void Sequential::train(Data::Dataset        &dataset,
                                const Loss::LossBase &loss_func,
                                const uint32_t        n_epochs)
         {
@@ -100,6 +100,7 @@ namespace Tipousi
                     backward(out_grad);
                     counter++;
                 }
+                dataset.shuffle();
                 std::cout << "Epoch: " << i
                           << ", Loss: " << total_loss / counter << std::endl;
             }
