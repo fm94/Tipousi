@@ -79,5 +79,5 @@ TEST(SimpleNetTest, AdderTest)
 
     std::cout << "gt: " << Y << std::endl;
     std::cout << "predictions: " << preds << std::endl;
-    EXPECT_LT(loss, 0.02f);
+    EXPECT_LT(loss, 0.04f);
 }

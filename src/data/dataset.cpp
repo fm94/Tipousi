@@ -8,7 +8,7 @@ namespace Tipousi
                          size_t batch_size)
             : m_X(X), m_y(Y), m_batch_size(batch_size)
         {
-            if (batch_size > X.rows())
+            if (batch_size > static_cast<size_t>(X.rows()))
             {
                 throw std::invalid_argument(
                     "Batch size cannot be larger than the number of samples in "

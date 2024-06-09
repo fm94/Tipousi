@@ -7,25 +7,26 @@ using namespace Activation;
 TEST(SigmoidLayerTest, ForwardPass)
 {
     Eigen::MatrixXf in(2, 3);
-    in << 1.0, 2.0, 3.0, -1.0, -2.0, -3.0;
+    in << 1.0f, 2.0f, 3.0f, -1.0f, -2.0f, -3.0f;
 
     Eigen::MatrixXf out;
     Sigmoid         sigmoid;
     sigmoid.forward(in, out);
 
     Eigen::MatrixXf expected(2, 3);
-    expected << 0.731059, 0.880797, 0.952574, 0.268941, 0.119203, 0.0474259;
+    expected << 0.731059f, 0.880797f, 0.952574f, 0.268941f, 0.119203f,
+        0.0474259f;
 
-    ASSERT_TRUE(out.isApprox(expected, 1e-5));
+    ASSERT_TRUE(out.isApprox(expected, 1e-5f));
 }
 
 TEST(SigmoidLayerTest, BackwardPass)
 {
     Eigen::MatrixXf in(2, 3);
-    in << 1.0, 2.0, 3.0, -1.0, -2.0, -3.0;
+    in << 1.0f, 2.0f, 3.0f, -1.0f, -2.0f, -3.0f;
 
     Eigen::MatrixXf dout(2, 3);
-    dout << 0.1, 0.2, 0.7, -0.1, -0.2, -0.7;
+    dout << 0.1f, 0.2f, 0.7f, -0.1f, -0.2f, -0.7f;
 
     Eigen::MatrixXf out;
     Sigmoid         sigmoid;

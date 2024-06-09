@@ -2,6 +2,7 @@
 
 #include <Eigen/Dense>
 #include <algorithm>
+#include <numeric>
 #include <random>
 #include <vector>
 
