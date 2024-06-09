@@ -32,6 +32,8 @@ namespace Tipousi
             void train(Data::Dataset &dataset, const Loss::LossBase &loss,
                        const uint32_t n_epochs) override;
 
+            void summary() override;
+
           private:
             Node               *m_input_node  = nullptr;
             Node               *m_output_node = nullptr;

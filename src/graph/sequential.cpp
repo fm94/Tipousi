@@ -1,4 +1,5 @@
 #include "graph/sequential.hpp"
+#include "sequential.hpp"
 #include <iostream>
 
 namespace Tipousi
@@ -104,6 +105,18 @@ namespace Tipousi
                 std::cout << "Epoch: " << i
                           << ", Loss: " << total_loss / counter << std::endl;
             }
+        }
+
+        void Sequential::summary()
+        {
+            // n params
+            int total = 0;
+            for (const auto &node : m_node_registry)
+            {
+                total += node->get_n_trainable_params();
+            }
+            std::cout << "Number of trainable parameters: " << total
+                      << std::endl;
         }
 
     }  // namespace Graph

@@ -15,6 +15,8 @@ namespace Tipousi
                                const Loss::LossBase &loss,
                                const uint32_t        n_epochs) = 0;
 
+            virtual void summary() = 0;
+
           protected:
             Trainable()          = default;
             virtual ~Trainable() = default;

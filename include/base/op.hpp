@@ -26,6 +26,8 @@ namespace Tipousi
             m_optimizers.emplace_back(optimizer.clone());
         };
 
+        virtual int get_n_trainable_params() { return 0; }
+
       protected:
         Eigen::MatrixXf m_current_inputs;
         Eigen::MatrixXf m_current_outputs;

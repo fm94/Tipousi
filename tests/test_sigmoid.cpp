@@ -36,7 +36,8 @@ TEST(SigmoidLayerTest, BackwardPass)
     sigmoid.backward(dout, ddout);
 
     Eigen::MatrixXf expected(2, 3);
-    expected << 0.019661, 0.020998, 0.031623, -0.019661, -0.020998, -0.031623;
+    expected << 0.019661f, 0.020998f, 0.031623f, -0.019661f, -0.020998f,
+        -0.031623f;
 
-    ASSERT_TRUE(ddout.isApprox(expected, 1e-4));
+    ASSERT_TRUE(ddout.isApprox(expected, 1e-4f));
 }

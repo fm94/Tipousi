@@ -38,6 +38,7 @@ TEST(SimpleNetTest, AdderTest)
 
     // create the graph (pass input and output nodes)
     Sequential net(node1, node3, sgd);
+    net.summary();
 
     // test inference
     Eigen::MatrixXf X(4, 2);

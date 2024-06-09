@@ -19,28 +19,32 @@ using namespace Loss;
 using namespace Data;
 using namespace Optimizer;
 
-TEST(SimpleNetTest, XORTest)
+TEST(BigNetTest, DISABLED_XORTest)
 {
     // in this test we try to train a net to learn the xor operation
     // we have two inputs and one output
     int n_features{2};
     int n_labels{1};
 
-    Node *node1 = Node::create<Dense>(n_features, 16);
+    Node *node1 = Node::create<Dense>(n_features, 30);
     Node *node2 = Node::create<Sigmoid>();
-    Node *node3 = Node::create<Dense>(16, n_labels);
+    Node *node3 = Node::create<Dense>(30, 30);
     Node *node4 = Node::create<Sigmoid>();
+    Node *node5 = Node::create<Dense>(30, n_labels);
+    Node *node6 = Node::create<Sigmoid>();
 
     // build the dependencies
     node2->add_input(node1);
     node3->add_input(node2);
     node4->add_input(node3);
+    node5->add_input(node4);
+    node6->add_input(node5);
 
-    float learning_rate{0.08f};
+    float learning_rate{0.1f};
     Adam  optimizer(learning_rate);
 
     // create the graph (pass input and output nodes)
-    Sequential net(node1, node4, optimizer);
+    Sequential net(node1, node6, optimizer);
     net.summary();
 
     // test inference
@@ -52,13 +56,13 @@ TEST(SimpleNetTest, XORTest)
     Y << 0, 1, 1, 0;
 
     // create dataset
-    size_t  batch_size = 3;
+    size_t  batch_size = 4;
     Dataset dataset(X, Y, batch_size);
 
     // define the loss
     MSE  mse;
     auto start = std::chrono::high_resolution_clock::now();
-    net.train(dataset, mse, 100);
+    net.train(dataset, mse, 10000);
     auto end = std::chrono::high_resolution_clock::now();
     auto duration =
         std::chrono::duration_cast<std::chrono::microseconds>(end - start)

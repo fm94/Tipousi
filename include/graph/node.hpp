@@ -30,6 +30,8 @@ namespace Tipousi
             std::vector<Node *> &get_outputs() { return m_outputs; }
             std::vector<Node *> &get_inputs() { return m_inputs; }
 
+            int get_n_trainable_params();
+
           private:
             Node(std::unique_ptr<Op> ptr);
 

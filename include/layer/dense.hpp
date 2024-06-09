@@ -22,6 +22,7 @@ namespace Tipousi
             Eigen::MatrixXf get_bias() { return m_bias; }
 
             void set_optimizer(Optimizer::OptimizerBase &optimizer) override;
+            int  get_n_trainable_params() override;
 
           private:
             Eigen::MatrixXf m_weights;

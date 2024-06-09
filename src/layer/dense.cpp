@@ -36,6 +36,11 @@ namespace Tipousi
             // we need two optimizers for weights and biases
             m_optimizers.emplace_back(optimizer.clone());
             m_optimizers.emplace_back(optimizer.clone());
+        }
+
+        int Dense::get_n_trainable_params()
+        {
+            return m_weights.size() + m_bias.size();
         };
     }  // namespace Layer
 }  // namespace Tipousi

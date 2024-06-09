@@ -51,5 +51,10 @@ namespace Tipousi
             m_operation->set_optimizer(optimizer);
         }
 
+        int Node::get_n_trainable_params()
+        {
+            return m_operation->get_n_trainable_params();
+        }
+
     }  // namespace Graph
 }  // namespace Tipousi
